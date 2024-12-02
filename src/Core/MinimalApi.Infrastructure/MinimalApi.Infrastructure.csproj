@@ -13,7 +13,6 @@
   <ItemGroup>
     <Folder Include="Persistence\Configurations\" />
     <Folder Include="ServiceImplementations\" />
-    <Folder Include="RepositoryImplementations\" />
   </ItemGroup>
 
   <ItemGroup>
