@@ -15,4 +15,9 @@
     <ProjectReference Include="..\MinimalApi.Domain\MinimalApi.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ServiceInterfaces\" />
+    <Folder Include="RepositoryInterfaces\" />
+  </ItemGroup>
+
 </Project>
