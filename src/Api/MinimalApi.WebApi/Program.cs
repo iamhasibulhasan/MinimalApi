@@ -1,3 +1,4 @@
+using Carter;
 using Microsoft.EntityFrameworkCore;
 using MinimalApi.Application;
 using MinimalApi.Application.RepositoryInterfaces.Students;
@@ -6,7 +7,6 @@ using MinimalApi.Infrastructure;
 using MinimalApi.Infrastructure.Persistence;
 using MinimalApi.Infrastructure.RepositoryImplementations.Students;
 using MinimalApi.Infrastructure.ServiceImplementations.Students;
-using MinimalApi.WebApi.Areas.Students;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -21,6 +21,7 @@ builder.Services
     .AddApplication()
     .AddInfrastructure();
 
+builder.Services.AddCarter();
 builder.Services.AddScoped<IStudentService, StudentService>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 
@@ -41,6 +42,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapStudentEndpoints();
+
+app.MapCarter();
 
 app.Run();

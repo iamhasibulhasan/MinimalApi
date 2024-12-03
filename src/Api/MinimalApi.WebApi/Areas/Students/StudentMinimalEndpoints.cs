@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿using Carter;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using MinimalApi.Application.Common.Utilities;
 using MinimalApi.Application.Features.Students.Command.Create;
@@ -10,9 +11,10 @@ using MinimalApi.Application.Features.Students.Queries.GetById;
 
 namespace MinimalApi.WebApi.Areas.Students;
 
-public static class StudentMinimalEndpoints
+public class StudentMinimalEndpoints : ICarterModule
 {
-    public static void MapStudentEndpoints(this IEndpointRouteBuilder app)
+
+    public void AddRoutes(IEndpointRouteBuilder app)
     {
         var group = app.MapGroup("api/minimal/student");
 
@@ -22,6 +24,17 @@ public static class StudentMinimalEndpoints
         group.MapGet("{id}", GetById).WithName(nameof(GetById));
         group.MapGet("", GetAll).WithName(nameof(GetAll));
     }
+
+    //public static void MapStudentEndpoints(this IEndpointRouteBuilder app)
+    //{
+    //    var group = app.MapGroup("api/minimal/student");
+
+    //    group.MapPost("", CreateStudent).WithName(nameof(CreateStudent));
+    //    group.MapPut("", UpdateStudent).WithName(nameof(UpdateStudent));
+    //    group.MapDelete("{id}", DeleteStudent).WithName(nameof(DeleteStudent));
+    //    group.MapGet("{id}", GetById).WithName(nameof(GetById));
+    //    group.MapGet("", GetAll).WithName(nameof(GetAll));
+    //}
 
     #region Command
 
@@ -113,6 +126,7 @@ public static class StudentMinimalEndpoints
         }
         return Results.Json(result, statusCode: result.StatusCode);
     }
+
     #endregion
 
 }
