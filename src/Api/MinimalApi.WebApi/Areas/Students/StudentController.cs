@@ -5,6 +5,8 @@ using MinimalApi.Application.Features.Students.Command.Create;
 using MinimalApi.Application.Features.Students.Command.Delete;
 using MinimalApi.Application.Features.Students.Command.Dto;
 using MinimalApi.Application.Features.Students.Command.Update;
+using MinimalApi.Application.Features.Students.Queries.GetAll;
+using MinimalApi.Application.Features.Students.Queries.GetById;
 
 namespace MinimalApi.WebApi.Areas.Students;
 
@@ -68,5 +70,34 @@ public class StudentController : BaseApiController
         return StatusCode(result.StatusCode, result);
     }
 
+    #endregion
+
+    #region Queries
+
+    [HttpGet()]
+    public async Task<IActionResult> GetAll(CancellationToken cancellationToken = default)
+    {
+        Result result;
+        var command = new GetAllStudentQuery();
+        result = await _mediator.Send(command, cancellationToken);
+        if (result.Data is null)
+        {
+            return StatusCode(result.StatusCode, result);
+        }
+        return StatusCode(result.StatusCode, result);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<IActionResult> GetById(int id, CancellationToken cancellationToken = default)
+    {
+        Result result;
+        var command = new GetByIdStudentQuery(id);
+        result = await _mediator.Send(command, cancellationToken);
+        if (result.Data is null)
+        {
+            return StatusCode(result.StatusCode, result);
+        }
+        return StatusCode(result.StatusCode, result);
+    }
     #endregion
 }

@@ -46,5 +46,21 @@ namespace MinimalApi.Infrastructure.ServiceImplementations.Students
             await _studentRepository.UpdateAsync(exists, savechanges, cancellationToken);
             return Utility.GetSuccessMsg(CommonMessages.UpdatedSuccessfully);
         }
+
+        #region Query
+
+        public async Task<Result> GetAllStudent(CancellationToken cancellationToken)
+        {
+            var res = await _studentRepository.GetAllAsync(cancellationToken);
+            return Utility.GetSuccessMsg(CommonMessages.DataExists, res);
+        }
+
+        public async Task<Result> GetByIdStudent(int id, CancellationToken cancellationToken)
+        {
+            var res = await _studentRepository.GetByIdAsync(id, cancellationToken);
+            return Utility.GetSuccessMsg(CommonMessages.DataExists, res);
+        }
+
+        #endregion
     }
 }
