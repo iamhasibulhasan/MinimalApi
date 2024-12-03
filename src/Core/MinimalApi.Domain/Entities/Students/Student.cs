@@ -10,4 +10,16 @@ public sealed class Student : BaseEntity
     public DateTime DateOfBirth { get; private set; }
     public string Email { get; private set; }
     public string Phone { get; private set; }
+
+    public static Student Create(string studentCode, string firstName, string lastName, DateTime dateOfBirth, string email, string phone)
+    {
+        Student student = new Student();
+        student.StudentCode = studentCode;
+        student.FirstName = firstName;
+        student.LastName = lastName;
+        student.DateOfBirth = dateOfBirth;
+        student.Email = email;
+        student.Phone = phone;
+        return student;
+    }
 }
