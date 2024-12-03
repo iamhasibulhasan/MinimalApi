@@ -6,6 +6,7 @@ using MinimalApi.Infrastructure;
 using MinimalApi.Infrastructure.Persistence;
 using MinimalApi.Infrastructure.RepositoryImplementations.Students;
 using MinimalApi.Infrastructure.ServiceImplementations.Students;
+using MinimalApi.WebApi.Areas.Students;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -40,5 +41,6 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapStudentEndpoints();
 
 app.Run();
