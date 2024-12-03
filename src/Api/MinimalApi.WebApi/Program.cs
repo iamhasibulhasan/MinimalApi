@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MinimalApi.Application;
 using MinimalApi.Infrastructure;
+using MinimalApi.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -15,8 +16,8 @@ builder.Services
     .AddApplication()
     .AddInfrastructure();
 
-builder.Services.AddDbContext<DbContext>(options =>
-options.UseNpgsql(configuration.GetConnectionString("DbConnection"), b => b.MigrationsAssembly(typeof(DbContext).Assembly.FullName)));
+builder.Services.AddDbContext<RndDbContext>(options =>
+options.UseNpgsql(configuration.GetConnectionString("DbConnection"), b => b.MigrationsAssembly(typeof(RndDbContext).Assembly.FullName)));
 
 var app = builder.Build();
 
