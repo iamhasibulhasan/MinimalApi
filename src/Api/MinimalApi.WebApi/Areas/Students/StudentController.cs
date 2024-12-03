@@ -1,5 +1,6 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using MinimalApi.Application.Common.Utilities;
 using MinimalApi.Application.Features.Students.Command.Create;
 using MinimalApi.Application.Features.Students.Command.Dto;
 
@@ -22,19 +23,16 @@ public class StudentController : BaseApiController
 
         if (!validationResult.IsValid)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError);
+            Result result = Utility.GetValidationFailedMsg(FluentValidationHelper.GetErrorMessage(validationResult.Errors));
+            return StatusCode(result.StatusCode, result);
         }
         var command = new CreateStudentCommand(model);
         var _result = await _mediator.Send(command, cancellationToken);
 
-        return Ok();
+        return StatusCode(_result.StatusCode, _result);
     }
 
-    //[HttpGet("getnone")]
-    //public void getnone()
-    //{
 
-    //}
 
     #endregion
 }

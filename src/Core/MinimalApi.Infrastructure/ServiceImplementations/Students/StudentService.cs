@@ -19,9 +19,8 @@ namespace MinimalApi.Infrastructure.ServiceImplementations.Students
         {
             Student student = Student.Create(model.StudentCode, model.FirstName, model.LastName, model.DateOfBirth, model.Email, model.Phone);
             await _studentRepository.CreateAsync(student, savechanges, cancellationToken);
-            Result result = new();
-            result.Data = student;
-            return result;
+
+            return Utility.GetSuccessMsg(CommonMessages.SavedSuccessfully);
 
         }
     }
