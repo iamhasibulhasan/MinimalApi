@@ -23,5 +23,28 @@ namespace MinimalApi.Infrastructure.ServiceImplementations.Students
             return Utility.GetSuccessMsg(CommonMessages.SavedSuccessfully);
 
         }
+
+        public async Task<Result> DeleteStudent(int id, CancellationToken cancellationToken, bool savechanges = true)
+        {
+            var exists = await _studentRepository.GetByIdAsync(id, cancellationToken);
+            if (exists is null)
+            {
+                return Utility.GetNoDataFoundMsg(CommonMessages.NoDataFound);
+            }
+            await _studentRepository.DeleteAsync(id, savechanges, cancellationToken);
+            return Utility.GetSuccessMsg(CommonMessages.DeletedSuccessfully);
+        }
+
+        public async Task<Result> UpdateStudent(UpdateStudentDto model, CancellationToken cancellationToken, bool savechanges = true)
+        {
+            var exists = await _studentRepository.GetByIdAsync(model.Id, cancellationToken);
+            if (exists is null)
+            {
+                return Utility.GetNoDataFoundMsg(CommonMessages.NoDataFound);
+            }
+            exists.Update(model.StudentCode, model.FirstName, model.LastName, model.DateOfBirth, model.Email, model.Phone);
+            await _studentRepository.UpdateAsync(exists, savechanges, cancellationToken);
+            return Utility.GetSuccessMsg(CommonMessages.UpdatedSuccessfully);
+        }
     }
 }

@@ -22,4 +22,14 @@ public sealed class Student : BaseEntity
         student.Phone = phone;
         return student;
     }
+
+    public void Update(string studentCode, string firstName, string lastName, DateTime dateOfBirth, string email, string phone)
+    {
+        StudentCode = studentCode;
+        FirstName = firstName;
+        LastName = lastName;
+        DateOfBirth = dateOfBirth;
+        Email = email;
+        Phone = phone;
+    }
 }

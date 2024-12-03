@@ -17,7 +17,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Features\Students\Command\Delete\" />
     <Folder Include="Features\Students\Command\Update\" />
     <Folder Include="Features\Students\Queries\Dto\" />
   </ItemGroup>

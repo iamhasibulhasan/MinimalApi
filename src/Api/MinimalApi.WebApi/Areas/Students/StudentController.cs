@@ -2,7 +2,9 @@
 using Microsoft.AspNetCore.Mvc;
 using MinimalApi.Application.Common.Utilities;
 using MinimalApi.Application.Features.Students.Command.Create;
+using MinimalApi.Application.Features.Students.Command.Delete;
 using MinimalApi.Application.Features.Students.Command.Dto;
+using MinimalApi.Application.Features.Students.Command.Update;
 
 namespace MinimalApi.WebApi.Areas.Students;
 
@@ -32,7 +34,39 @@ public class StudentController : BaseApiController
         return StatusCode(_result.StatusCode, _result);
     }
 
+    [HttpPut]
+    public async Task<IActionResult> Put([FromBody] UpdateStudentDto model, CancellationToken cancellationToken = default)
+    {
+        var validationResult = new UpdateStudentDtoValidator().Validate(model);
 
+        if (!validationResult.IsValid)
+        {
+            Result result = Utility.GetValidationFailedMsg(FluentValidationHelper.GetErrorMessage(validationResult.Errors));
+            return StatusCode(result.StatusCode, result);
+        }
+        var command = new UpdateStudentCommand(model);
+        var _result = await _mediator.Send(command, cancellationToken);
+
+        return StatusCode(_result.StatusCode, _result);
+    }
+
+    [HttpDelete]
+    public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken = default)
+    {
+
+        Result result;
+        if (id <= 0)
+        {
+            result = Utility.GetValidationFailedMsg(CommonMessages.InvalidId);
+        }
+        else
+        {
+            var command = new DeleteStudentCommand(id);
+            result = await _mediator.Send(command, cancellationToken);
+        }
+
+        return StatusCode(result.StatusCode, result);
+    }
 
     #endregion
 }
