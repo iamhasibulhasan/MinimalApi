@@ -1,12 +1,6 @@
 using Carter;
-using Microsoft.EntityFrameworkCore;
 using MinimalApi.Application;
-using MinimalApi.Application.RepositoryInterfaces.Students;
-using MinimalApi.Application.ServiceInterfaces.Students;
 using MinimalApi.Infrastructure;
-using MinimalApi.Infrastructure.Persistence;
-using MinimalApi.Infrastructure.RepositoryImplementations.Students;
-using MinimalApi.Infrastructure.ServiceImplementations.Students;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -19,14 +13,9 @@ builder.Services.AddSwaggerGen();
 
 builder.Services
     .AddApplication()
-    .AddInfrastructure();
+    .AddInfrastructure(configuration);
 
 builder.Services.AddCarter();
-builder.Services.AddScoped<IStudentService, StudentService>();
-builder.Services.AddScoped<IStudentRepository, StudentRepository>();
-
-builder.Services.AddDbContext<RndDbContext>(options =>
-options.UseNpgsql(configuration.GetConnectionString("DbConnection"), b => b.MigrationsAssembly(typeof(RndDbContext).Assembly.FullName)));
 
 var app = builder.Build();
 
